@@ -1,8 +1,10 @@
 const express = require('express');
 const authMiddleware = require('../middleware/authMiddleware');
-const { getUserProfile } = require('../controllers/userController'); // Assume getUserProfile is defined
+const customerController = require('../controllers/customerController'); // Assume getUserProfile is defined
 const router = express.Router();
 
-// router.get('/profile', authMiddleware, getUserProfile);
+router.post('/create', authMiddleware, customerController.createCustomer);
+router.post('/update', authMiddleware, customerController.updateCustomer);
+router.post('/delete', authMiddleware, customerController.deleteCustomer);
 
 module.exports = router;
