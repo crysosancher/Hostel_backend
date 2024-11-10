@@ -8,7 +8,7 @@ const config = {
     },
     jwt: {
         secret: process.env.JWT_SECRET,
-        expiresIn: '1h'  // Set default expiration for tokens
+        expiresIn: '12h'  // Set default expiration for tokens
     },
     server: {
         port: process.env.PORT || 3000

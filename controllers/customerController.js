@@ -15,6 +15,7 @@ async function createCustomer(req, res) {
         res.status(500).json({ message: 'Failed to create customer' });
     }
 }
+
 async function updateCustomer(req, res) {
 		try {
 				const tokenUsername = req.user.username;  // Assuming req.user is populated with decoded JWT
@@ -36,13 +37,36 @@ async function updateCustomer(req, res) {
 }
 async function deleteCustomer(req, res) {
 		try {
-				const userId = req.params.userId;
-				const response = await Customer.deleteCustomer(userId);
+			const tokenUsername = req.user.username;  // Assuming req.user is populated with decoded JWT
+				const userId = req.body.userId;
+				const response = await Customer.deleteCustomer(userId, tokenUsername);
 				res.status(200).json(response);
 		} catch (error) {
 				console.error('Delete customer error:', error);
 				res.status(500).json({ message: 'Failed to delete customer' });
 		}
 }
+async function getAllCustomers(req, res) {
+		try {
+				const response = await Customer.getAllCustomers();
+				res.status(200).json(response);
+		} catch (error) {
+				console.error('Get all customers error:', error);
+				res.status(500).json({ message: 'Failed to get all customers' });
+		}
+}
+async function getCustomerById(req, res) {
+		try {
+				const userId = req.params.userId;
+				const response = await Customer.getCustomerById(userId);
+				if (!response) {
+						return res.status(404).json({ message: 'Customer not found' });
+				}
+				res.status(200).json(response);
+		} catch (error) {
+				console.error('Get customer by ID error:', error);
+				res.status(500).json({ message: 'Failed to get customer by ID' });
+		}
+}
 
-module.exports = { createCustomer, updateCustomer, deleteCustomer };
+module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById };
