@@ -4,17 +4,18 @@ const db = require('../config/db');
 class Customer {
     static async createCustomer(data) {
         const conn = await db();
-        const { userName, dob, mobile, emailId, adhaar, pan, address, workAddress, startDate, endDate, noticeInd, bedNo, roomNo, rent, emergencyNo, createdBy } = data;
-        
-        const sql = `
-            INSERT INTO AARYA.CUSTOMERS 
-            (USER_ID, USER_NAME, ROLE_IND, DOB, MOBILE, EMAIL_ID, ADHAAR, PAN, ADDRESS, STUDENT_IND, WORK_ADDRESS, START_DATE, END_DATE, NOTICE_IND, BED_NO, ACTIVE, CREATION_DATE, CREATED_BY, LAST_UPDATED, LAST_UPDATED_BY, ROOM_NO, RENT, EMERGENCY_NO) 
-            VALUES 
-            (AARYA.CUSTOMER_ID_SEQ.NEXTVAL, :userName, 'USER', :dob, :mobile, :emailId, :adhaar, :pan, :address, 'Y', :workAddress, TO_DATE(:startDate, 'YYYY-MM-DD'), TO_DATE(:endDate, 'YYYY-MM-DD'), :noticeInd, :bedNo, 'Y', SYSDATE, :createdBy, SYSDATE, :createdBy, :roomNo, :rent, :emergencyNo)`;
+        const { userName, dob, mobile, emailId, adhaar, pan, address, workAddress, startDate, endDate, noticeInd, bedNo, roomNo, rent, emergencyNo, createdBy, roomType } = data;
 
-        const binds = {
-            userName, dob, mobile, emailId, adhaar, pan, address, workAddress, startDate, endDate, noticeInd, bedNo, createdBy, roomNo, rent, emergencyNo
-        };
+const sql = `
+    INSERT INTO AARYA.CUSTOMERS 
+    (USER_ID, USER_NAME, ROLE_IND, DOB, MOBILE, EMAIL_ID, ADHAAR, PAN, ADDRESS, STUDENT_IND, WORK_ADDRESS, START_DATE, END_DATE, NOTICE_IND, BED_NO, ACTIVE, CREATION_DATE, CREATED_BY, LAST_UPDATED, LAST_UPDATED_BY, ROOM_NO, RENT, EMERGENCY_NO, ROOM_TYPE) 
+    VALUES 
+    (AARYA.CUSTOMER_ID_SEQ.NEXTVAL, :userName, 'USER', :dob, :mobile, :emailId, :adhaar, :pan, :address, 'Y', :workAddress, TO_DATE(:startDate, 'YYYY-MM-DD'), TO_DATE(:endDate, 'YYYY-MM-DD'), :noticeInd, :bedNo, 'Y', SYSDATE, :createdBy, SYSDATE, :createdBy, :roomNo, :rent, :emergencyNo, :roomType)`;
+
+const binds = {
+    userName, dob, mobile, emailId, adhaar, pan, address, workAddress, startDate, endDate, noticeInd, bedNo, createdBy, roomNo, rent, emergencyNo, roomType
+};
+
 
         try {
             await conn.execute(sql, binds, { autoCommit: true });
