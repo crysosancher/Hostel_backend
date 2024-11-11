@@ -96,6 +96,10 @@ const binds = {
             fields.push(`EMERGENCY_NO = :emergencyNo`);
             binds.emergencyNo = data.emergencyNo;
         }
+        if(data.roomType){
+            fields.push(`ROOM_TYPE = :roomType`);
+            binds.roomType = data.roomType;
+        }
         if (data.lastUpdatedBy) {
             fields.push(`LAST_UPDATED_BY = :lastUpdatedBy`);
             binds.lastUpdatedBy = data.lastUpdatedBy;
