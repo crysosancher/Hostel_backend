@@ -201,7 +201,7 @@ const binds = {
     // Get customer by ID
     static async getCustomerById(userId) {
         console.log('userId:', userId);  // Debugging log
-        userId =1;
+        // userId =1;
         
         const conn = await db();
         const sql = `
