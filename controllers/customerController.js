@@ -1,3 +1,4 @@
+const e = require('express');
 const Customer = require('../models/Customer');
 const Payments = require('../models/Payment');
 const Room = require('../models/Room');
@@ -9,12 +10,13 @@ async function createCustomer(req, res) {
             ...req.body,
             createdBy: tokenUsername
         };
+
         
         const response = await Customer.createCustomer(data);
         res.status(201).json(response);
     } catch (error) {
         console.error('Create customer error:', error);
-        res.status(500).json({ message: 'Failed to create customer' });
+        res.status(500).json({ message: error.message || 'Failed to create customer' });
     }
 }
 
