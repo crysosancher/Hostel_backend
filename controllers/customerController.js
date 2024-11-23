@@ -1,4 +1,5 @@
 const Customer = require('../models/Customer');
+const Payments = require('../models/Payment');
 
 async function createCustomer(req, res) {
     try {
@@ -68,5 +69,36 @@ async function getCustomerById(req, res) {
 				res.status(500).json({ message: 'Failed to get customer by ID' });
 		}
 }
+async function insertPayment(req, res) {
+	try {
+			// Extract the username from the decoded JWT (assumed to be present in `req.user`)
+			const tokenUsername = req.user.username;
 
-module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById };
+			// Prepare payment data by merging request body with additional fields
+			const paymentData = {
+					...req.body,
+					createdBy: tokenUsername, // Add the creator's username
+					creationDate: new Date(), // Add the current date as the creation date
+			};
+
+			// Call the Payments class's createPayment method
+			const response = await Payments.createPayment(paymentData);
+
+			// Respond with success
+			res.status(201).json({
+					message: 'Payment inserted successfully',
+					data: response,
+			});
+	} catch (error) {
+			console.error('Insert payment error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to insert payment',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
+
+
+module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment };

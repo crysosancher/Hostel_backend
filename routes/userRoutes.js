@@ -8,5 +8,6 @@ router.post('/update', authMiddleware, customerController.updateCustomer);
 router.post('/delete', authMiddleware, customerController.deleteCustomer);
 router.get('/getall', authMiddleware, customerController.getAllCustomers);
 router.get('/getbyId:userId', authMiddleware, customerController.getCustomerById);
+router.post('/insertPayment', authMiddleware, customerController.insertPayment);
 
 module.exports = router;
