@@ -35,7 +35,12 @@ class Room{
 			connection = await connect(); // Get a connection
 
 			const sql = `
-					SELECT COUNT(ROOM_NO) FROM AARYA.ROOM_DETAILS WHERE ROOM_TYPE = :type AND AVAILABLE = 'Y'
+					SELECT 
+    COUNT(DISTINCT ROOM_NO) AS Available_Rooms,
+    COUNT(DISTINCT BED_NO) AS TOTAL_BEDS
+FROM AARYA.ROOM_DETAILS
+WHERE ROOM_TYPE = :type
+  AND AVAILABLE = 'Y'
 			`;
 
 			const binds = { type };
