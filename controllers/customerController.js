@@ -169,5 +169,28 @@ async function getNumberAvailableRooms(req, res) {
 			});
 	}
 }
+async function getRoomNumber(req, res) {
+	try {
+			// Extract the room type from the request parameters
+			const roomType = req.query.type;
 
-module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent, getNumberAvailableRooms };
+			// Call the Room class's getRoomNumber method
+			const result = await Room.getRoomNumber(roomType);
+
+			// Respond with the room number
+			res.status(200).json({
+					message: 'Room number retrieved successfully',
+					data: result.rows,
+			});
+	} catch (error) {
+			console.error('Get room number error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get room number',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
+
+module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent, getNumberAvailableRooms,getRoomNumber };
