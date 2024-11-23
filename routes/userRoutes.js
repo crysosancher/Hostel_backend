@@ -13,5 +13,6 @@ router.get('/getPaymentsByUserId', authMiddleware, customerController.getPayment
 router.get('/getRoomRent', authMiddleware, customerController.getRoomRent);
 router.get('/getAvailableRooms', authMiddleware, customerController.getNumberAvailableRooms);
 router.get("/getRoomNumbers", authMiddleware, customerController.getRoomNumber);
+router.get("/getAllRoomTypesDetails", authMiddleware, customerController.getAllRoomTypesDetails);
 
 module.exports = router;

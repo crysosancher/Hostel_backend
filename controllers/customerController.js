@@ -192,5 +192,25 @@ async function getRoomNumber(req, res) {
 			});
 	}
 }
+async function getAllRoomTypesDetails(req, res) {
+	try {
+			// Call the Room class's getAllRoomTypesDetails method
+			const result = await Room.getAllRoomTypesDetails();
 
-module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent, getNumberAvailableRooms,getRoomNumber };
+			// Respond with the room types details
+			res.status(200).json({
+					message: 'Room types details retrieved successfully',
+					data: result,
+			});
+	} catch (error) {
+			console.error('Get all room types details error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get all room types details',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
+
+module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent, getNumberAvailableRooms,getRoomNumber, getAllRoomTypesDetails };
