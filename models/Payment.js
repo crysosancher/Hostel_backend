@@ -1,15 +1,23 @@
 const connect = require('../config/db');
+const crypto = require('crypto'); // For generating unique IDs
 
 class Payments {
     static async createPayment(payment) {
         let connection;
         try {
             connection = await connect(); // Get a connection
+
+            // Generate PMT_ID using a timestamp-based UUID
+            const uuid = crypto.randomUUID();
+						const pmtId = Buffer.from(uuid).toString('base64').substring(0, 8);
+
             const sql = `
-                INSERT INTO payments (USER_ID, PMT_YEAR, PMT_MONTH, AMOUNT, PMT_DATE, TXN_ID, CREATED_BY, CREATION_DATE, PMT_TYPE, PMT_MODE, RECEIPT)
-                VALUES (:userId, :pmtYear, :pmtMonth, :amount, TO_DATE(:pmtDate, 'YYYY-MM-DD'), :txnId, :createdBy, SYSDATE, :pmtType, :pmtMode, :receipt)
+                INSERT INTO payments (PMT_ID, USER_ID, PMT_YEAR, PMT_MONTH, AMOUNT, PMT_DATE, TXN_ID, CREATED_BY, CREATION_DATE, PMT_TYPE, PMT_MODE, RECEIPT)
+                VALUES (:pmtId, :userId, :pmtYear, :pmtMonth, :amount, TO_DATE(:pmtDate, 'YYYY-MM-DD'), :txnId, :createdBy, SYSDATE, :pmtType, :pmtMode, :receipt)
             `;
+
             const binds = {
+                pmtId: pmtId, // Pass the generated PMT_ID
                 userId: payment.userId,
                 pmtYear: payment.pmtYear,
                 pmtMonth: payment.pmtMonth,
