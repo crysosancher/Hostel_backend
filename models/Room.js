@@ -69,7 +69,7 @@ WHERE ROOM_TYPE = :type
 					SELECT DISTINCT 
     ROOM_NO 
 FROM AARYA.ROOM_DETAILS 
-WHERE ROOM_TYPE = :type;`;
+WHERE ROOM_TYPE = :type`;
 			const binds = { type };
 			const options = { outFormat: oracledb.OUT_FORMAT_OBJECT };
 			const result = await connection.execute(sql, binds, options);
