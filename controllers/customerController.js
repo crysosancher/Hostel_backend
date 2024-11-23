@@ -122,6 +122,29 @@ async function getPaymentsByUserId(req, res) {
 			});
 	}
 }
+async function getRoomRent(req, res) {
+	try {
+			// Extract the room type from the request parameters
+			const roomType = req.query.type;
+
+			// Call the Room class's getRoomRent method
+			const result = await Room.getRoomRent(roomType);
+
+			// Respond with the room rent
+			res.status(200).json({
+					message: 'Room rent retrieved successfully',
+					data: result.rows,
+			});
+	} catch (error) {
+			console.error('Get room rent error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get room rent',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
 
 
-module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId };
+module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent };

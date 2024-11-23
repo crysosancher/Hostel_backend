@@ -10,5 +10,6 @@ router.get('/getall', authMiddleware, customerController.getAllCustomers);
 router.get('/getbyId:userId', authMiddleware, customerController.getCustomerById);
 router.post('/insertPayment', authMiddleware, customerController.insertPayment);
 router.get('/getPaymentsByUserId', authMiddleware, customerController.getPaymentsByUserId);
+router.get('/getRoomRent', authMiddleware, customerController.getRoomRent);
 
 module.exports = router;
