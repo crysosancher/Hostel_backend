@@ -1,5 +1,6 @@
 const Customer = require('../models/Customer');
 const Payments = require('../models/Payment');
+const Room = require('../models/Room');
 
 async function createCustomer(req, res) {
     try {
@@ -145,6 +146,28 @@ async function getRoomRent(req, res) {
 			});
 	}
 }
+async function getNumberAvailableRooms(req, res) {
+	try {
+			// Extract the room type from the request parameters
+			const roomType = req.query.type;
 
+			// Call the Room class's getNumberAvailableRooms method
+			const result = await Room.getNumberAvailableRooms(roomType);
+			// Respond with the number of available rooms
+			res.status(200).json({
+					message: 'Number of available rooms retrieved successfully',
+					data: result.rows,
+			});
+	}
+	catch (error) {
+			console.error('Get number of available rooms error:', error);
 
-module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent };
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get number of available rooms',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
+
+module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent, getNumberAvailableRooms };
