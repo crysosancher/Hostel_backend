@@ -14,5 +14,6 @@ router.get('/getRoomRent', authMiddleware, customerController.getRoomRent);
 router.get('/getAvailableRooms', authMiddleware, customerController.getNumberAvailableRooms);
 router.get("/getRoomNumbers", authMiddleware, customerController.getRoomNumber);
 router.get("/getAllRoomTypesDetails", authMiddleware, customerController.getAllRoomTypesDetails);
+router.get("/getTypeDetails", authMiddleware, customerController.getTypeDetails);
 
 module.exports = router;

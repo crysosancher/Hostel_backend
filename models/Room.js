@@ -133,5 +133,34 @@ GROUP BY rd.ROOM_TYPE, t.PRICE
 		}
 		
 	}
+	static async getTypeDetails(type){
+		let connection;
+		try{
+			connection=await connect();
+			const sql = `SELECT 
+                ROOM_NO,
+                ROOM_TYPE,
+                LISTAGG(CASE WHEN AVAILABLE = 'Y' THEN BED_NO END, ',') WITHIN GROUP (ORDER BY BED_NO) AS AvailableBeds,
+                LISTAGG(BED_NO, ',') WITHIN GROUP (ORDER BY BED_NO) AS TotalBeds
+            FROM AARYA.ROOM_DETAILS
+            WHERE ROOM_TYPE = :roomType
+            GROUP BY ROOM_NO, ROOM_TYPE`;
+			const binds = { roomType: type };
+			const options = { outFormat: oracledb.OUT_FORMAT_OBJECT };
+			const result = await connection.execute(sql, binds, options);
+			let data=result.rows;
+			return data;
+		}catch(err){
+			throw err;
+		}finally{
+			if(connection){
+				try{
+					await connection.close();
+				}catch(closeErr){
+					console.error('Error closing OracleDB connection:', closeErr);
+				}
+			}
+		}
+	}
 }
 module.exports=Room;
