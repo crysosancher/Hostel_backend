@@ -1,3 +1,5 @@
+const oracledb = require('oracledb');
+
 const connect = require('../config/db');
 const crypto = require('crypto'); // For generating unique IDs
 
@@ -45,6 +47,32 @@ class Payments {
             }
         }
     }
+		static async getPaymentsByUserId(userId) {
+			let connection;
+			try {
+					connection = await connect(); // Get a connection
+
+					const sql = `
+							SELECT * FROM payments WHERE USER_ID = :userId ORDER BY PMT_DATE DESC
+					`;
+
+					const binds = { userId };
+
+					const options = { outFormat: oracledb.OBJECT }; // Return results as an array of objects
+					const result = await connection.execute(sql, binds, options);
+					return result.rows; // Return the result rows
+			} catch (err) {
+					throw err;
+			} finally {
+					if (connection) {
+							try {
+									await connection.close();
+							} catch (closeErr) {
+									console.error('Error closing OracleDB connection:', closeErr);
+							}
+					}
+			}
+	}
 }
 
 module.exports = Payments;

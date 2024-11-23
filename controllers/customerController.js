@@ -99,6 +99,29 @@ async function insertPayment(req, res) {
 			});
 	}
 }
+async function getPaymentsByUserId(req, res) {
+	try {
+			// Extract the user ID from the request parameters
+			const userId = req.query.userId;
+
+			// Call the Payments class's getPaymentsByUserId method
+			const payments = await Payments.getPaymentsByUserId(userId);
+
+			// Respond with the payments
+			res.status(200).json({
+					message: 'Payments retrieved successfully',
+					data: payments,
+			});
+	} catch (error) {
+			console.error('Get payments by user ID error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get payments',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
 
 
-module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment };
+module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId };
