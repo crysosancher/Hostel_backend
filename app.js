@@ -11,6 +11,10 @@ const app = express();
 app.use(cors());  // This allows all origins by default
 
 app.use(bodyParser.json());
+//test route
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
 
 // Routes
 app.use('/auth', authRoutes);
