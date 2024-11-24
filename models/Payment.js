@@ -53,7 +53,7 @@ class Payments {
 					connection = await connect(); // Get a connection
 
 					const sql = `
-							SELECT * FROM payments WHERE USER_ID = :userId ORDER BY PMT_DATE DESC
+							SELECT USER_ID, PMT_YEAR, PMT_MONTH, AMOUNT, PMT_DATE, TXN_ID, CREATED_BY, LAST_UPDATED, LAST_UPDATED_BY, CREATION_DATE, PMT_TYPE, PMT_MODE, PMT_ID FROM payments WHERE USER_ID = :userId ORDER BY PMT_DATE DESC
 					`;
 
 					const binds = { userId };
