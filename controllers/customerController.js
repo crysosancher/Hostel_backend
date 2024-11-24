@@ -1,5 +1,7 @@
+const e = require('express');
 const Customer = require('../models/Customer');
 const Payments = require('../models/Payment');
+const Room = require('../models/Room');
 
 async function createCustomer(req, res) {
     try {
@@ -8,12 +10,13 @@ async function createCustomer(req, res) {
             ...req.body,
             createdBy: tokenUsername
         };
+
         
         const response = await Customer.createCustomer(data);
         res.status(201).json(response);
     } catch (error) {
         console.error('Create customer error:', error);
-        res.status(500).json({ message: 'Failed to create customer' });
+        res.status(500).json({ message: error.message || 'Failed to create customer' });
     }
 }
 
@@ -122,6 +125,115 @@ async function getPaymentsByUserId(req, res) {
 			});
 	}
 }
+async function getRoomRent(req, res) {
+	try {
+			// Extract the room type from the request parameters
+			const roomType = req.query.type;
 
+			// Call the Room class's getRoomRent method
+			const result = await Room.getRoomRent(roomType);
 
-module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId };
+			// Respond with the room rent
+			res.status(200).json({
+					message: 'Room rent retrieved successfully',
+					data: result.rows,
+			});
+	} catch (error) {
+			console.error('Get room rent error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get room rent',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
+async function getNumberAvailableRooms(req, res) {
+	try {
+			// Extract the room type from the request parameters
+			const roomType = req.query.type;
+
+			// Call the Room class's getNumberAvailableRooms method
+			const result = await Room.getNumberAvailableRooms(roomType);
+			// Respond with the number of available rooms
+			res.status(200).json({
+					message: 'Number of available rooms retrieved successfully',
+					data: result.rows,
+			});
+	}
+	catch (error) {
+			console.error('Get number of available rooms error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get number of available rooms',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
+async function getRoomNumber(req, res) {
+	try {
+			// Extract the room type from the request parameters
+			const roomType = req.query.type;
+
+			// Call the Room class's getRoomNumber method
+			const result = await Room.getRoomNumber(roomType);
+
+			// Respond with the room number
+			res.status(200).json({
+					message: 'Room number retrieved successfully',
+					data: result.rows,
+			});
+	} catch (error) {
+			console.error('Get room number error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get room number',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
+async function getAllRoomTypesDetails(req, res) {
+	try {
+			// Call the Room class's getAllRoomTypesDetails method
+			const result = await Room.getAllRoomTypesDetails();
+
+			// Respond with the room types details
+			res.status(200).json({
+					message: 'Room types details retrieved successfully',
+					data: result,
+			});
+	} catch (error) {
+			console.error('Get all room types details error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get all room types details',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
+async function getTypeDetails(req, res) {
+	try {
+		let type = req.query.type;
+			// Call the Room class's getAllRoomTypesDetails method
+			const result = await Room.getTypeDetails(type);
+
+			// Respond with the room types details
+			res.status(200).json({
+					message: 'Room types details retrieved successfully',
+					data: result,
+			});
+	} catch (error) {
+			console.error('Get all room types details error:', error);
+
+			// Respond with an error message
+			res.status(500).json({
+					message: 'Failed to get all room types details',
+					error: error.message || 'Internal Server Error',
+			});
+	}
+}
+
+module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent, getNumberAvailableRooms,getRoomNumber, getAllRoomTypesDetails,getTypeDetails };

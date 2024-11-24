@@ -10,5 +10,10 @@ router.get('/getall', authMiddleware, customerController.getAllCustomers);
 router.get('/getbyId:userId', authMiddleware, customerController.getCustomerById);
 router.post('/insertPayment', authMiddleware, customerController.insertPayment);
 router.get('/getPaymentsByUserId', authMiddleware, customerController.getPaymentsByUserId);
+router.get('/getRoomRent', authMiddleware, customerController.getRoomRent);
+router.get('/getAvailableRooms', authMiddleware, customerController.getNumberAvailableRooms);
+router.get("/getRoomNumbers", authMiddleware, customerController.getRoomNumber);
+router.get("/getAllRoomTypesDetails", authMiddleware, customerController.getAllRoomTypesDetails);
+router.get("/getTypeDetails", authMiddleware, customerController.getTypeDetails);
 
 module.exports = router;

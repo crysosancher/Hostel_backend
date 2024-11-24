@@ -11,7 +11,7 @@ const config = {
         expiresIn: '12h'  // Set default expiration for tokens
     },
     server: {
-        port: process.env.PORT || 3000
+        port: process.env.PORT || 5000
     }
 };
 

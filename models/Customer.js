@@ -6,6 +6,14 @@ class Customer {
         const conn = await db();
         const { userName, dob, mobile, emailId, adhaar, pan, address, workAddress, startDate, endDate, noticeInd, bedNo, roomNo, rent, emergencyNo, createdBy, roomType } = data;
 
+          // SQL query to check if the bed is available
+    const checkBedSql = `
+    SELECT 1 
+    FROM AARYA.ROOM_DETAILS 
+    WHERE ROOM_NO = :roomNo AND BED_NO = :bedNo AND AVAILABLE = 'Y'
+`;
+
+
 const sql = `
     INSERT INTO AARYA.CUSTOMERS 
     (USER_ID, USER_NAME, ROLE_IND, DOB, MOBILE, EMAIL_ID, ADHAAR, PAN, ADDRESS, STUDENT_IND, WORK_ADDRESS, START_DATE, END_DATE, NOTICE_IND, BED_NO, ACTIVE, CREATION_DATE, CREATED_BY, LAST_UPDATED, LAST_UPDATED_BY, ROOM_NO, RENT, EMERGENCY_NO, ROOM_TYPE) 
@@ -18,7 +26,24 @@ const binds = {
 
 
         try {
+        // Check if the bed is available
+        const checkResult = await conn.execute(checkBedSql, { roomNo, bedNo });
+        if (checkResult.rows.length === 0) {
+            throw new Error('The specified bed is not available.');
+        }
+
+
+            // Insert the customer into the database
             await conn.execute(sql, binds, { autoCommit: true });
+            //once customer is created, update the room_details table to mark the bed as unavailable
+            const updateRoomSql = `
+            UPDATE AARYA.ROOM_DETAILS
+            SET AVAILABLE = 'N'
+            WHERE ROOM_NO = :roomNo AND BED_NO = :bedNo
+        `;
+        const updateRoomBinds = { roomNo, bedNo };
+        await conn.execute(updateRoomSql, updateRoomBinds, { autoCommit: true });
+        
             return { message: 'Customer created successfully' };
         } catch (err) {
             console.error('Customer creation error:', err);
