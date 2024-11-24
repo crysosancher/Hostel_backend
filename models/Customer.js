@@ -208,7 +208,7 @@ const binds = {
                 // last_updated: row[18] ? row[18].toISOString().split('T')[0] : null,
                 // last_updated_by: row[19],
                 room_no: row[20],
-                photo: row[21],
+                // photo: row[21],
                 rent: row[22],
                 emergency_no: row[23],
                 room_type: row[24]
