@@ -180,7 +180,7 @@ const binds = {
     //for get all customers
     static async getAllCustomers() {
         const conn = await db();
-        const sql = `SELECT * FROM AARYA.CUSTOMERS`;
+        const sql = `SELECT * FROM AARYA.CUSTOMERS order by room_no`;
     
         try {
             const result = await conn.execute(sql);
