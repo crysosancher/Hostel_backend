@@ -181,7 +181,7 @@ const binds = {
     //for get all customers
     static async getAllCustomers() {
         const conn = await db();
-        const sql = `SELECT * FROM AARYA.CUSTOMERS order by room_no`;
+        const sql = `SELECT * FROM AARYA.CUSTOMERS order by LAST_UPDATED DESC`;
     
         try {
             const result = await conn.execute(sql);
