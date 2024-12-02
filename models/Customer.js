@@ -4,7 +4,7 @@ const db = require('../config/db');
 class Customer {
     static async createCustomer(data) {
         const conn = await db();
-        const { userName, dob, mobile, emailId, adhaar, pan, address, workAddress, startDate, endDate, noticeInd, bedNo, roomNo, rent, emergencyNo, createdBy, roomType } = data;
+        const { userName, dob, mobile, emailId, adhaar, pan, address, workAddress, startDate, endDate, noticeInd, bedNo, roomNo, rent, emergencyNo, createdBy, roomType,studentInd} = data;
 
           // SQL query to check if the bed is available
     const checkBedSql = `
@@ -18,10 +18,10 @@ const sql = `
     INSERT INTO AARYA.CUSTOMERS 
     (USER_ID, USER_NAME, ROLE_IND, DOB, MOBILE, EMAIL_ID, ADHAAR, PAN, ADDRESS, STUDENT_IND, WORK_ADDRESS, START_DATE, END_DATE, NOTICE_IND, BED_NO, ACTIVE, CREATION_DATE, CREATED_BY, LAST_UPDATED, LAST_UPDATED_BY, ROOM_NO, RENT, EMERGENCY_NO, ROOM_TYPE) 
     VALUES 
-    (AARYA.CUSTOMER_ID_SEQ.NEXTVAL, :userName, 'USER', :dob, :mobile, :emailId, :adhaar, :pan, :address, 'Y', :workAddress, TO_DATE(:startDate, 'YYYY-MM-DD'), TO_DATE(:endDate, 'YYYY-MM-DD'), :noticeInd, :bedNo, 'Y', SYSDATE, :createdBy, SYSDATE, :createdBy, :roomNo, :rent, :emergencyNo, :roomType)`;
+    (AARYA.CUSTOMER_ID_SEQ.NEXTVAL, :userName, 'USER', :dob, :mobile, :emailId, :adhaar, :pan, :address, :STUDENT_IND, :workAddress, TO_DATE(:startDate, 'YYYY-MM-DD'), TO_DATE(:endDate, 'YYYY-MM-DD'), :noticeInd, :bedNo, 'Y', SYSDATE, :createdBy, SYSDATE, :createdBy, :roomNo, :rent, :emergencyNo, :roomType)`;
 
 const binds = {
-    userName, dob, mobile, emailId, adhaar, pan, address, workAddress, startDate, endDate, noticeInd, bedNo, createdBy, roomNo, rent, emergencyNo, roomType
+    userName, dob, mobile, emailId, adhaar, pan, address,studentInd, workAddress, startDate, endDate, noticeInd, bedNo, createdBy, roomNo, rent, emergencyNo, roomType
 };
 
 
@@ -156,8 +156,9 @@ const binds = {
         const sql = `
             UPDATE AARYA.CUSTOMERS 
             SET ACTIVE = 'N', 
-                LAST_UPDATED = SYSDATE, 
-                LAST_UPDATED_BY = :lastUpdatedBy 
+                LAST_UPDATED = current_date, 
+                LAST_UPDATED_BY = :lastUpdatedBy,
+                end_date=current_date  
             WHERE USER_ID = :userId
         `;
         const binds = { userId, lastUpdatedBy };
