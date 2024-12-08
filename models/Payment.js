@@ -79,7 +79,7 @@ class Payments {
             connection = await connect(); // Get a connection
 
             const sql = `
-                SELECT PMT_TYPE,PMT_MODE,TXN_ID,PMT_MONTH,PMT_YEAR,AMOUNT FROM PAYMENTS
+                SELECT PMT_TYPE,PMT_MODE,TXN_ID,PMT_MONTH,PMT_YEAR,AMOUNT,PMT_DATE FROM PAYMENTS
             `;
 
             const options = { outFormat: oracledb.OBJECT }; // Return results as an array of objects
