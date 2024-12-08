@@ -20,6 +20,16 @@ async function createCustomer(req, res) {
     }
 }
 
+async function getTransaction(req,res){
+	try{
+		const response = await Payments.getAllTransactions();
+		res.status(200).json(response);
+	}catch(error){
+		console.error('Get transaction error:', error);
+		res.status(500).json({message: 'Failed to get transaction'});
+	}
+}
+
 async function updateCustomer(req, res) {
 		try {
 				const tokenUsername = req.user.username;  // Assuming req.user is populated with decoded JWT
@@ -236,4 +246,4 @@ async function getTypeDetails(req, res) {
 	}
 }
 
-module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent, getNumberAvailableRooms,getRoomNumber, getAllRoomTypesDetails,getTypeDetails };
+module.exports = { createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomerById, insertPayment, getPaymentsByUserId, getRoomRent, getNumberAvailableRooms,getRoomNumber, getAllRoomTypesDetails,getTypeDetails,getTransaction };

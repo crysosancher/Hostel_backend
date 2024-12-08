@@ -73,6 +73,30 @@ class Payments {
 					}
 			}
 	}
+    static async getAllTransactions(){
+        let connection;
+        try {
+            connection = await connect(); // Get a connection
+
+            const sql = `
+                SELECT PMT_TYPE,PMT_MODE,TXN_ID,PMT_MONTH,PMT_YEAR,AMOUNT FROM PAYMENTS
+            `;
+
+            const options = { outFormat: oracledb.OBJECT }; // Return results as an array of objects
+            const result = await connection.execute(sql, [], options);
+            return result.rows; // Return the result rows
+        } catch (err) {
+            throw err;
+        } finally {
+            if (connection) {
+                try {
+                    await connection.close();
+                } catch (closeErr) {
+                    console.error('Error closing OracleDB connection:', closeErr);
+                }
+            }
+        }
+    }
 }
 
 module.exports = Payments;
