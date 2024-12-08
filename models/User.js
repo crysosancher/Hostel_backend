@@ -5,7 +5,7 @@ class User {
     static async findByUsername(username) {
         const conn = await connect();
         const result = await conn.execute(
-            `SELECT USER_ID, USERNAME, PASSWORD, ROLE_IND, ACTIVE FROM AARYA.LOGIN WHERE USERNAME = :username`,
+            `SELECT USER_ID, USERNAME, PASSWORD, ROLE_IND, ACTIVE FROM LOGIN WHERE USERNAME = :username`,
             [username]
         );
         await conn.close();
@@ -15,8 +15,8 @@ class User {
     static async createUser(username, hashedPassword, role_ind = 'USER') {
         const conn = await connect();
         const result = await conn.execute(
-            `INSERT INTO AARYA.LOGIN (USER_ID, USERNAME, PASSWORD, ACTIVE, ROLE_IND)
-             VALUES (AARYA.LOGIN_SEQ.NEXTVAL, :username, :password, 'Y', :role_ind)`,
+            `INSERT INTO LOGIN (USER_ID, USERNAME, PASSWORD, ACTIVE, ROLE_IND)
+             VALUES (LOGIN_SEQ.NEXTVAL, :username, :password, 'Y', :role_ind)`,
             [username, hashedPassword, role_ind],
             { autoCommit: true }
         );
