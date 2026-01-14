@@ -1,0 +1,870 @@
+{
+	"info": {
+		"_postman_id": "hostel-backend-collection",
+		"name": "Hostel Backend API",
+		"description": "Complete API collection for Hostel Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Income Management",
+			"item": [
+				{
+					"name": "Create Income (without receipt)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"pmtYear\": 2024,\n  \"pmtMonth\": \"01-January\",\n  \"pmtDate\": \"2024-01-15\",\n  \"pmtAmount\": 5000,\n  \"pmtType\": \"Room Rent\",\n  \"txnId\": \"TXN20240115001\",\n  \"utr\": \"123456789\",\n  \"pmtMode\": \"UPI\",\n  \"bank\": \"ICICI\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/income/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"create"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Income (with receipt)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pmtYear",
+									"value": "2024",
+									"type": "text"
+								},
+								{
+									"key": "pmtMonth",
+									"value": "01-January",
+									"type": "text"
+								},
+								{
+									"key": "pmtDate",
+									"value": "2024-01-15",
+									"type": "text"
+								},
+								{
+									"key": "pmtAmount",
+									"value": "5000",
+									"type": "text"
+								},
+								{
+									"key": "pmtType",
+									"value": "Room Rent",
+									"type": "text"
+								},
+								{
+									"key": "txnId",
+									"value": "TXN20240115002",
+									"type": "text"
+								},
+								{
+									"key": "utr",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "pmtMode",
+									"value": "UPI",
+									"type": "text"
+								},
+								{
+									"key": "bank",
+									"value": "ICICI",
+									"type": "text"
+								},
+								{
+									"key": "receipt",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/income/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"create"
+							]
+						},
+						"description": "Create income with optional receipt image. Use form-data. Receipt is optional."
+					}
+				},
+				{
+					"name": "Get Income By Transaction ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/income/getByTxnId/TXN20240115001",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"getByTxnId",
+								"TXN20240115001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Income Records",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/income/getAll",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"getAll"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Income By Year and Month",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/income/getByYearMonth?year=2024&month=01-January",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"getByYearMonth"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2024"
+								},
+								{
+									"key": "month",
+									"value": "01-January"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Income By Payment Mode",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/income/getByPmtMode?mode=UPI",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"getByPmtMode"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "UPI"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Income Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/income/getStats?year=2024",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"getStats"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2024"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Income",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"pmtAmount\": 5500,\n  \"pmtMode\": \"BANK\",\n  \"bank\": \"SBI\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/income/update/TXN20240115001",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"update",
+								"TXN20240115001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Income",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/income/delete/TXN20240115001",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"delete",
+								"TXN20240115001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Receipt Image",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/income/receipt/TXN20240115001",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"receipt",
+								"TXN20240115001"
+							]
+						},
+						"description": "Returns the receipt image as binary. Open in browser to view the image."
+					}
+				},
+				{
+					"name": "Get Receipt Base64",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/income/receipt/TXN20240115001/base64",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"receipt",
+								"TXN20240115001",
+								"base64"
+							]
+						},
+						"description": "Returns the receipt image as Base64 encoded string in JSON response."
+					}
+				},
+				{
+					"name": "Upload Receipt",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "receipt",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/income/receipt/TXN20240115001",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"income",
+								"receipt",
+								"TXN20240115001"
+							]
+						},
+						"description": "Upload a receipt image for a transaction. Max size: 5MB. Accepts image files only."
+					}
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Sign Up",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.token) {",
+									"        pm.environment.set('authToken', jsonData.token);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"john_doe\",\n  \"password\": \"password123\",\n  \"role_ind\": \"USER\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.token) {",
+									"        pm.environment.set('authToken', jsonData.token);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"john_doe\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Customer Management",
+			"item": [
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"9876543210\",\n  \"roomNumber\": 101,\n  \"checkInDate\": \"2026-01-15\",\n  \"checkOutDate\": \"2026-01-20\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/user/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"create"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerId\": 1,\n  \"name\": \"John Doe Updated\",\n  \"email\": \"john.updated@example.com\",\n  \"phone\": \"9876543211\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/user/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"update"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/user/delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/user/getall",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getall"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Customer By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/user/getbyId:1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getbyId:1"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Payment Management",
+			"item": [
+				{
+					"name": "Insert Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerId\": 1,\n  \"amount\": 5000,\n  \"paymentDate\": \"2026-01-15\",\n  \"paymentMethod\": \"credit_card\",\n  \"description\": \"Room rent payment\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/user/insertPayment",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"insertPayment"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Payments By User ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/user/getPaymentsByUserId?userId=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getPaymentsByUserId"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Transactions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/user/getAllTransaction",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getAllTransaction"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Room Management",
+			"item": [
+				{
+					"name": "Get Room Rent",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/user/getRoomRent?roomType=standard",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getRoomRent"
+							],
+							"query": [
+								{
+									"key": "roomType",
+									"value": "standard"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Available Rooms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/user/getAvailableRooms",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getAvailableRooms"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Room Numbers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/user/getRoomNumbers?roomType=standard",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getRoomNumbers"
+							],
+							"query": [
+								{
+									"key": "roomType",
+									"value": "standard"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Room Types Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/user/getAllRoomTypesDetails",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getAllRoomTypesDetails"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Type Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/user/getTypeDetails?roomType=standard",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getTypeDetails"
+							],
+							"query": [
+								{
+									"key": "roomType",
+									"value": "standard"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Test Route",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								""
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
